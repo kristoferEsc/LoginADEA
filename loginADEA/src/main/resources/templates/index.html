@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="layouts/base-layout :: head"></head>
+<body>
+
+	<div class="container mt-5">
+	 <div class="row justify-content-center">
+	 	<div class="col-md-8">
+	 		<div class="card card-body">
+	 			<span th:if="${session.usuario != null}">Bienvenido/a <span class="font-italic" th:text="${session.usuario.fecha_vigencia}"></span> </span>
+	 		   
+	 		   <div th:switch="${session.usuario.fecha_vigencia.before(#dates.createNow())}">
+				    <span th:case="true">
+				    <form th:action="@{/auth/cambioPass}" th:object="${usuar}" method="POST">
+					 <span class="font-italic"> LA CONTRASEÑA EXPIRO FAVOR DE ACTUALIZAR </span>
+					 <div class="row form-group">
+					 	<label class="col-md-3">Usuario</label>
+					 	<input type="text" class="form-control col-md-7" />
+					 </div>
+					 <div class="row form-group">
+					 	<label class="col-md-3">Nueva contraseña</label>
+					 	<input type="password" class="form-control col-md-7" />
+					 </div>
+					 <div class="row form-group">
+					 	<button type="submit" class="btn btn-primary btn-3">Confirmar</button>
+					 </div>
+					</form>
+					</span>
+				    <span th:case="false"></span>
+				</div>
+	 		   
+	 		    <form th:action="@{/logout}" method="POST">
+	 		    	<button type="submit" class="btn btn-primary btn-3">Salir</button>
+	 		    </form>
+	 		    
+	 		    	
+	 		</div>
+	 	</div>
+	 </div>
+	</div>
+	
+</body>
+</html>
